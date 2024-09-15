@@ -20,8 +20,8 @@ async function main() {
   const ControllerFactory = await ethers.getContractFactory("Controller");
   const controllerContract = await ControllerFactory.deploy(await nftContract.getAddress(), await PCSPContract.getAddress());
 
-  await PCSPContract.transferOwnership(await controllerContract.getAddress())
-  await nftContract.transferOwnership(await controllerContract.getAddress())
+  await PCSPContract.transferOwnership(await controllerContract.getAddress());
+  await nftContract.transferOwnership(await controllerContract.getAddress());
 
   console.log("Controller deployed to address:", await controllerContract.getAddress());
 }
