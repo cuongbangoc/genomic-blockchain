@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -68,7 +69,7 @@ contract Controller {
     ) public {
         // require(bytes(docs[docId].id).length == 0, "Doc already been submitted");
         require(!docSubmits[docId], "Doc already been submitted");
-        require(sessions[sessionId].confirmed == false, "Session is ended");
+        require(!sessions[sessionId].confirmed, "Session is ended");
         require(sessions[sessionId].user == msg.sender, "Invalid session owner");
 
         // TODO: Implement this method: The proof here is used to verify that the result is returned from a valid computation on the gene data. For simplicity, we will skip the proof verification in this implementation. The gene data's owner will receive a NFT as a ownership certicate for his/her gene profile.

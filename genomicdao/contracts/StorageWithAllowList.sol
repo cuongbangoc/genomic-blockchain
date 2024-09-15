@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 contract StorageWithAllowList {
     address public owner;
-    mapping(address => bool) public isAuthorized;
+    mapping(address => bool) public grantedUers;
     struct DataDoc {
         string id;
         string hashContent;
@@ -15,7 +16,7 @@ contract StorageWithAllowList {
     }
 
     modifier onlyAllowed() {
-        require(isAuthorized[msg.sender] || msg.sender == owner, "Only owner or allowed addresses can perform this action");
+        require(grantedUers[msg.sender] || msg.sender == owner, "Only owner or allowed addresses can perform this action");
         _;
     }
 
@@ -25,7 +26,7 @@ contract StorageWithAllowList {
     }
 
     function grantUser(address user) public onlyOwner {
-        isAuthorized[user] = true;
+        grantedUers[user] = true;
     }
 
     function storeData(string memory docId, string memory hashContent) public onlyOwner {
