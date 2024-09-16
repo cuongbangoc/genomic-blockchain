@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
+/* eslint-disable import/first */
 import dotenv from 'dotenv';
+
+dotenv.config();
 
 import AuthService from './services/auth.service.js';
 import CommonUtil from './utils/commonUtil.js';
@@ -8,8 +11,6 @@ import GenDataService from './services/gendata.service.js';
 import TeeService from './services/tee.service.js';
 
 import controllerContract from './contracts/Controller.js';
-
-dotenv.config();
 
 async function main() {
   // Step 1: Register new User
