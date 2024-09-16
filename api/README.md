@@ -24,6 +24,7 @@
 
 ## Configuration
 ```bash
+cd api
 cp .env.example .env
 ```
 Then replace `BLOCKCHAIN_URL` with your url.
