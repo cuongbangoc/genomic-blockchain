@@ -36,8 +36,6 @@ contract Controller {
     // EVENTS
     //
     event UploadData(string docId, uint256 sessionId);
-    event GNFTMinted(string docId, uint256 sessionId, uint256 tokenId);
-    event PCSPRewarded(string docId, uint256 sessionId, uint256 riskScore);
 
     constructor(address nftAddress, address pcspAddress) {
         geneNFT = GeneNFT(nftAddress);
@@ -51,7 +49,13 @@ contract Controller {
 
         uint256 sessionId = _sessionIdCounter.current();
 
-        sessions[sessionId] = UploadSession(sessionId, msg.sender, "", false);
+        sessions[sessionId] = UploadSession({
+            id: sessionId,
+            user: msg.sender,
+            proof: "",
+            confirmed: false
+        });
+        docSubmits[docId] = true;
 
         emit UploadData(docId, sessionId);
 
@@ -67,8 +71,7 @@ contract Controller {
         uint256 sessionId,
         uint256 riskScore
     ) public {
-        // require(bytes(docs[docId].id).length == 0, "Doc already been submitted");
-        require(!docSubmits[docId], "Doc already been submitted");
+        require(bytes(docs[docId].id).length == 0, "Doc already been submitted");
         require(!sessions[sessionId].confirmed, "Session is ended");
         require(sessions[sessionId].user == msg.sender, "Invalid session owner");
 
@@ -82,11 +85,9 @@ contract Controller {
         // TODO: Mint NFT
         uint256 nftId = geneNFT.safeMint(msg.sender);
         nftDocs[nftId] = docId;
-        emit GNFTMinted(docId, sessionId, nftId);
 
         // TODO: Reward PCSP token based on risk stroke
         pcspToken.reward(msg.sender, riskScore);
-        emit PCSPRewarded(docId, sessionId, riskScore);
 
         // TODO: Close session
         sessions[sessionId].confirmed = true;
