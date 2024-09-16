@@ -1,0 +1,59 @@
+{
+  "name": "genomic-api",
+  "version": "1.0.0",
+  "description": "Geonomic API",
+  "main": "src/index.js",
+  "repository": "",
+  "author": "Cuong Ba <bangoccuong@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start:prod": "pm2 start ecosystem.config.json --no-daemon",
+    "start": "cross-env NODE_ENV=development nodemon src/index.js",
+    "test": "jest -i --colors --verbose --detectOpenHandles",
+    "test:watch": "jest -i --watchAll",
+    "coverage": "jest -i --coverage",
+    "coverage:coveralls": "jest -i --coverage --coverageReporters=text-lcov | coveralls",
+    "lint": "eslint .",
+    "lint:fix": "yarn lint --fix",
+    "prettier": "prettier --check **/*.js",
+    "prettier:fix": "prettier --write **/*.js",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.0",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^10.0.0",
+    "web3": "^4.12.1"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.7",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^24.0.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-security": "^1.4.0",
+    "faker": "^5.1.0",
+    "husky": "^5.1.2",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.0.7",
+    "node-mocks-http": "^1.8.0",
+    "nodemon": "^2.0.0",
+    "pm2": "^4.1.2",
+    "prettier": "^2.0.5",
+    "supertest": "^6.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  }
+}
